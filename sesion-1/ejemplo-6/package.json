@@ -1,0 +1,11 @@
+{
+  "name": "dany-first-package",
+  "version": "0.0.0",
+  "description": "This is my first package",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC"
+}
