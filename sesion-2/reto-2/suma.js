@@ -1,5 +1,6 @@
 const numberA = parseFloat(process.argv[2]);
 const numberB = parseFloat(process.argv[3]);
+require("dotenv").config();
 
 if (isNaN(numberA) || isNaN(numberB)) {
   process.exit(1);
