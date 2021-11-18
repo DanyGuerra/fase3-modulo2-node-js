@@ -3,9 +3,11 @@ const express = require("express");
 const morgan = require("morgan");
 const PORT = process.env.PORT || 3000;
 const server = express();
+
 // body parser
 server.use(express.json());
 // logger
+
 server.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
 );
@@ -14,6 +16,7 @@ server.use((req, res, next) => {
   console.log("Request Headers", JSON.stringify(req.headers, null, 4));
   next();
 });
+
 server.use((req, res, next) => {
   if (req.get("PeT-TyPe") === "Cat") {
     res.send("Miau!");
@@ -24,6 +27,7 @@ server.use((req, res, next) => {
   }
   next();
 });
+
 server.get("/api/users", (req, res) => {
   res.json({
     users: 20,
@@ -33,13 +37,14 @@ server.post("/api/users", (req, res) => {
   const body = req.body;
   console.log("body->", body);
   // create a user
-  res.json({
+  res.status(201).json({
     user: {
       id: Date.now(),
       ...body,
     },
   });
 });
+
 server.get("/api/users/:id", (req, res) => {
   const userId = req.params.id;
   res.json({
@@ -60,7 +65,7 @@ server.put("/api/users/:id", (req, res) => {
   const id = req.params.id;
   console.log("body->", body);
   // create a user
-  res.json({
+  res.status(202).json({
     user: {
       id: id,
       ...body,
@@ -75,7 +80,7 @@ server.put("/api/users/:id", (req, res) => {
 server.patch("/api/users/:id", (req, res) => {
   const userId = req.params.id;
   const body = req.body;
-  res.json({
+  res.status(202).json({
     user: {
       id: userId,
       ...body,
@@ -87,6 +92,15 @@ server.patch("/api/users/:id", (req, res) => {
 // return id from params
 // hardcoded body
 // 404 handler
+
+server.delete("/api/users/:id", (req, res) => {
+  const userId = req.params.id;
+  res.status(202).json({
+    user: {
+      id: userId,
+    },
+  });
+});
 
 server.use((req, res) => {
   res.send("Welcome");
