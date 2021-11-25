@@ -25,7 +25,7 @@ const createModel = (db, table) => ({
     return db.get(table).remove(filter).write();
   },
   createOne(fields) {
-    const item = { ...fields, createdAt: Date.now(), id: Date.now() };
+    const item = { ...fields, createdAt: Date.now(), id: nanoid() };
     db.get(table).push(item).write();
     return db.get(table).find({ id: item.id }).value();
   },
