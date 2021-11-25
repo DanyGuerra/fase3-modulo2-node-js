@@ -32,7 +32,9 @@ const putUserById = async (req, res) => {
   try {
     await User.update({ email: req.body.email }, { where: { id: id } });
     res.status(202).send("User Updated");
-  } catch (err) {}
+  } catch (err) {
+    res.status(400).send("Bad request");
+  }
 };
 
 const deleteUserById = async (req, res) => {
