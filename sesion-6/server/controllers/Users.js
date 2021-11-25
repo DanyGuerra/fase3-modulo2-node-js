@@ -29,11 +29,9 @@ const getUserById = async (req, res) => {
 
 const putUserById = async (req, res) => {
   const id = req.params.id;
-  console.log(req.body.email);
-  console.log(id);
   try {
     await User.update({ email: req.body.email }, { where: { id: id } });
-    res.send("User updated");
+    res.status(202).send("User Updated");
   } catch (err) {}
 };
 
