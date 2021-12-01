@@ -1,21 +1,29 @@
+const bcrypt = require("bcrypt");
+const { DataTypes } = require("sequelize");
+
 module.exports = (sequelize, dataTypes) => {
   const modelName = "User";
   const props = {
-    id: {
-      type: dataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-    },
-    email: {
-      type: dataTypes.STRING,
-      primaryKey: true,
-    },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    username: DataTypes.STRING,
+    name: DataTypes.STRING,
+    lastname: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING,
+    type: DataTypes.STRING,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
   };
 
   const options = {
     tableName: "users",
-    timestamps: false, //createdAt, updateAt
+    timestamps: true, //createdAt, updateAt
+    hooks: {
+      beforeCreate: (user) => {
+        const salt = bcrypt.genSaltSync();
+        user.password = bcrypt.hashSync(user.password, salt);
+      },
+    },
   };
 
   const User = sequelize.define(modelName, props, options);
