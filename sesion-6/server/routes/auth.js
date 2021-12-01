@@ -22,23 +22,19 @@ router.post("/", async (req, res, next) => {
     }
 
     // Generate a token
-    const token = jwt.sign({ userId: user.id }, "secretkey", {
+    const token = jwt.sign({ userId: user.id }, process.env.SECRET, {
       expiresIn: 36000,
     });
-
-    // console.log(token);
 
     res.json({
       message: "Authenticated sucessfully",
       token,
     });
+
+    // next();
   } catch (error) {
     console.log(error);
   }
-});
-
-router.get("/", (req, res) => {
-  res.send("holi");
 });
 
 router.post("/signup", (req, res) => {
