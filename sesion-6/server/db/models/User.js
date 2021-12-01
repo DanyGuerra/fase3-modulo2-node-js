@@ -28,6 +28,10 @@ module.exports = (sequelize, dataTypes) => {
 
   const User = sequelize.define(modelName, props, options);
 
+  User.prototype.validPassword = function (password) {
+    return bcrypt.compareSync(password, this.password);
+  };
+
   // relations
   // User.associate = function (models) {
   //   User.hasMany(models.Tasks, {

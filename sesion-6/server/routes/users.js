@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const db = require("../db");
-const User = require("../db/models").User;
+
 const {
   getAllUsers,
   createUser,
